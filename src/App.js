@@ -12,6 +12,8 @@ function App() {
     setTasks([...tasks, data]);
   };
 
+  const totalHrs = tasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
+
   return (
     <div className="wrapper text-center">
       <Container>
@@ -30,6 +32,11 @@ function App() {
 
           <Col md="6">
             <BadTaskList tasks={tasks} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Alert>Total hrs: {totalHrs}hrs</Alert>
           </Col>
         </Row>
       </Container>
