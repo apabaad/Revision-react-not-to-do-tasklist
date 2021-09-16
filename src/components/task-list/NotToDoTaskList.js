@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Alert } from 'react-bootstrap';
+import { DisplayAlert } from '../alert/DisplayAlert';
 
-export const BadTaskList = ({ badTasks, markAsGoodTask }) => {
+export const BadTaskList = ({ badTasks, markAsGoodTask, badHrs }) => {
   return (
     <div>
       <h2>Bad Task List</h2>
@@ -34,6 +35,7 @@ export const BadTaskList = ({ badTasks, markAsGoodTask }) => {
           })}
         </tbody>
       </Table>
+      <DisplayAlert text={`You can save ${badHrs}hrs/wk.`} variant="danger" />
     </div>
   );
 };
