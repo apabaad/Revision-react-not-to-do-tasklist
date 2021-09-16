@@ -1,8 +1,9 @@
 import './App.css';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { AddTaskForm } from './components/add-task-form/AddTaskForm';
 import { TaskList } from './components/task-list/TaskList';
 import { useState } from 'react';
+import { BadTaskList } from './components/task-list/NotToDoTaskList';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -24,10 +25,11 @@ function App() {
         <hr />
         <Row>
           <Col md="6">
-            <h2>Task List</h2>
+            <TaskList tasks={tasks} />
           </Col>
+
           <Col md="6">
-            <h2>Bad Task List</h2>
+            <BadTaskList tasks={tasks} />
           </Col>
         </Row>
       </Container>
