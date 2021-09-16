@@ -24,6 +24,16 @@ const App = () => {
     setTasks(tempTasks);
   };
 
+  const markAsGoodTask = (i) => {
+    // bring removed bad task to good task list
+    setTasks([...tasks, badTasks[i]]);
+
+    // remove
+    const tempArg = [...badTasks];
+    tempArg.splice(i, 1);
+    setBadTasks(tempArg);
+  };
+
   return (
     <div className="wrapper text-center">
       <Container>
@@ -41,7 +51,7 @@ const App = () => {
           </Col>
 
           <Col md="6">
-            <BadTaskList tasks={tasks} badTasks={badTasks} />
+            <BadTaskList badTasks={badTasks} markAsGoodTask={markAsGoodTask} />
           </Col>
         </Row>
         <Row>

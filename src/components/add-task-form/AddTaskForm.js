@@ -7,7 +7,7 @@ const initialFormData = {
 };
 
 export const AddTaskForm = ({ handleSubmit }) => {
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
