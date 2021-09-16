@@ -5,14 +5,24 @@ import { TaskList } from './components/task-list/TaskList';
 import { useState } from 'react';
 import { BadTaskList } from './components/task-list/NotToDoTaskList';
 
-function App() {
+const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [badTasks, setBadTasks] = useState([]);
 
   const handleOnSubmit = (data) => {
     setTasks([...tasks, data]);
   };
 
   const totalHrs = tasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
+
+  const markAsBadTask = (i) => {
+    setBadTasks([...badTasks, tasks[i]]);
+    const tempTasks = tasks.filter((item, index) => index !== i); //removing with filter
+
+    // const tempTasks = [...tasks]
+    // tempTasks.splice(i,1) removing with splice
+    setTasks(tempTasks);
+  };
 
   return (
     <div className="wrapper text-center">
@@ -27,11 +37,11 @@ function App() {
         <hr />
         <Row>
           <Col md="6">
-            <TaskList tasks={tasks} />
+            <TaskList tasks={tasks} markAsBadTask={markAsBadTask} />
           </Col>
 
           <Col md="6">
-            <BadTaskList tasks={tasks} />
+            <BadTaskList tasks={tasks} badTasks={badTasks} />
           </Col>
         </Row>
         <Row>
@@ -42,6 +52,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;

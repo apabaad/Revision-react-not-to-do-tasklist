@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 
-export const TaskList = ({ tasks }) => {
+export const TaskList = ({ tasks, markAsBadTask }) => {
   return (
     <div>
       <h2>Task List</h2>
@@ -21,7 +21,13 @@ export const TaskList = ({ tasks }) => {
                 <td>{task.task}</td>
                 <td>{task.hr}</td>
                 <td>
-                  <Button> Mark as not to do</Button>
+                  <Button
+                    onClick={() => {
+                      return markAsBadTask(i);
+                    }}
+                  >
+                    Mark as not to do
+                  </Button>
                 </td>
               </tr>
             );

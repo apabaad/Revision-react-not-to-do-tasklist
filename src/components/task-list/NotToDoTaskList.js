@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 
-export const BadTaskList = ({ tasks }) => {
+export const BadTaskList = ({ badTasks }) => {
   return (
     <div>
       <h2>Bad Task List</h2>
@@ -15,13 +15,17 @@ export const BadTaskList = ({ tasks }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>
-              <Button> Mark as to do</Button>
-            </td>
-          </tr>
+          {badTasks.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.hr}</td>
+                <td>{item.task}</td>
+                <td>
+                  <Button> Mark as to do</Button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>
