@@ -1,5 +1,5 @@
 import './App.css';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { AddTaskForm } from './components/add-task-form/AddTaskForm';
 import { TaskList } from './components/task-list/TaskList';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [badTasks, setBadTasks] = useState([]);
   const [hrsFinished, setHrsFinished] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState([]);
 
   const taskHrs = tasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
   const badHrs = badTasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
@@ -45,6 +46,26 @@ const App = () => {
     setBadTasks(tempArg);
   };
 
+  // on checkbox click
+  const handleOnTaskClicked = (e) => {
+    const { checked, value } = e.target;
+    if (checked) {
+      // add the index in the array
+      setTaskToDelete([...taskToDelete, +value]);
+    } else {
+      // remove the index from array
+      const tempTaskToDelete = taskToDelete.filter((item) => item !== value);
+      setTaskToDelete(tempTaskToDelete);
+    }
+  };
+
+  // delete function
+  const handleOnDelete = () => {
+    const tempArg = tasks.filter((item, i) => !taskToDelete.includes(i));
+    setTasks(tempArg);
+    setTaskToDelete([]);
+  };
+  console.log(tasks, taskToDelete);
   return (
     <div className="wrapper text-center">
       <Container>
@@ -64,7 +85,12 @@ const App = () => {
         <hr />
         <Row>
           <Col md="6">
-            <TaskList tasks={tasks} markAsBadTask={markAsBadTask} />
+            <TaskList
+              tasks={tasks}
+              markAsBadTask={markAsBadTask}
+              handleOnTaskClicked={handleOnTaskClicked}
+              taskToDelete={taskToDelete}
+            />
           </Col>
 
           <Col md="6">
@@ -77,9 +103,20 @@ const App = () => {
         </Row>
         <Row>
           <Col>
-            <DisplayAlert text={`Total hrs: ${totalHrs}hrs`} variant="info" />
+            <div className="d-grid gap-2 mb-2">
+              <Button
+                onClick={handleOnDelete}
+                variant="danger"
+                className="btn-block"
+              >
+                Delete
+              </Button>
+            </div>
           </Col>
         </Row>
+        <Col>
+          <DisplayAlert text={`Total hrs: ${totalHrs}hrs`} variant="info" />
+        </Col>
       </Container>
     </div>
   );

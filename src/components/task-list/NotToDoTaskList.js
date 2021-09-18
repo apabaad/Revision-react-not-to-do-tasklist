@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table, Alert } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { DisplayAlert } from '../alert/DisplayAlert';
 
 export const BadTaskList = ({ badTasks, markAsGoodTask, badHrs }) => {
@@ -19,8 +19,8 @@ export const BadTaskList = ({ badTasks, markAsGoodTask, badHrs }) => {
           {badTasks.map((item, index) => {
             return (
               <tr key={index}>
-                <td>{item.hr}</td>
                 <td>{item.task}</td>
+                <td>{item.hr}</td>
                 <td>
                   <Button
                     onClick={() => {
