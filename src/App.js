@@ -13,6 +13,7 @@ const App = () => {
   const [badTasks, setBadTasks] = useState([]);
   const [hrsFinished, setHrsFinished] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState([]);
+  const [badTaskToDelete, setBadTaskToDelete] = useState([]);
 
   const taskHrs = tasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
   const badHrs = badTasks.reduce((subTotal, item) => subTotal + +item.hr, 0);
@@ -31,6 +32,7 @@ const App = () => {
     setBadTasks([...badTasks, tasks[i]]);
     const tempTasks = tasks.filter((item, index) => index !== i); //removing with filter
     setTasks(tempTasks);
+    setTaskToDelete([]);
     // removing with splice
     // const tempTasks = [...tasks]
     // tempTasks.splice(i,1)
@@ -44,6 +46,7 @@ const App = () => {
     const tempArg = [...badTasks];
     tempArg.splice(i, 1);
     setBadTasks(tempArg);
+    setTaskToDelete([]);
   };
 
   // on checkbox click
@@ -54,18 +57,40 @@ const App = () => {
       setTaskToDelete([...taskToDelete, +value]);
     } else {
       // remove the index from array
-      const tempTaskToDelete = taskToDelete.filter((item) => item !== value);
+      const tempTaskToDelete = taskToDelete.filter((item) => item !== +value);
       setTaskToDelete(tempTaskToDelete);
     }
   };
 
+  // on bad task checkbox click ---
+  const handleOnBadTaskClicked = (e) => {
+    const { checked, value } = e.target;
+    if (checked) {
+      // add the index in the array
+      setBadTaskToDelete([...badTaskToDelete, +value]);
+    } else {
+      // remove the index from array
+      const tempTaskToDelete = badTaskToDelete.filter(
+        (item) => item !== +value
+      );
+      setBadTaskToDelete(tempTaskToDelete);
+    }
+  };
+  console.log(badTaskToDelete);
+  // console.log(taskToDelete);
+
   // delete function
   const handleOnDelete = () => {
     const tempArg = tasks.filter((item, i) => !taskToDelete.includes(i));
+    const tempBadArg = badTasks.filter(
+      (item, i) => !badTaskToDelete.includes(i)
+    );
     setTasks(tempArg);
     setTaskToDelete([]);
+    setBadTasks(tempBadArg);
+    setBadTaskToDelete([]);
   };
-  console.log(tasks, taskToDelete);
+
   return (
     <div className="wrapper text-center">
       <Container>
@@ -98,6 +123,8 @@ const App = () => {
               badTasks={badTasks}
               markAsGoodTask={markAsGoodTask}
               badHrs={badHrs}
+              handleOnBadTaskClicked={handleOnBadTaskClicked}
+              badTaskToDelete={badTaskToDelete}
             />
           </Col>
         </Row>

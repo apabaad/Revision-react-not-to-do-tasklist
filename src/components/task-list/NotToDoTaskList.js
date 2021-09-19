@@ -2,7 +2,13 @@ import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { DisplayAlert } from '../alert/DisplayAlert';
 
-export const BadTaskList = ({ badTasks, markAsGoodTask, badHrs }) => {
+export const BadTaskList = ({
+  badTasks,
+  markAsGoodTask,
+  badHrs,
+  badTaskToDelete,
+  handleOnBadTaskClicked,
+}) => {
   return (
     <div>
       <h2>Bad Task List</h2>
@@ -19,7 +25,15 @@ export const BadTaskList = ({ badTasks, markAsGoodTask, badHrs }) => {
           {badTasks.map((item, index) => {
             return (
               <tr key={index}>
-                <td>{item.task}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    defaultValue={index}
+                    onClick={handleOnBadTaskClicked}
+                    checked={badTaskToDelete.includes(index)}
+                  />{' '}
+                  <label>{item.task}</label>
+                </td>
                 <td>{item.hr}</td>
                 <td>
                   <Button
